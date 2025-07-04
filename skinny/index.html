@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="/dist/fonts.css">
+        <link type="text/css" rel="stylesheet" href="./style.css">
+        <script src="/dist/tikzjax.js"></script>
+    </head>
+    
+    <body>
+        <div class="title">
+            <h2>DiffCryptViz/Skinny</h2>
+        </div>
+        <div id="content">
+            <div id="input-container">
+                Active cells:
+                <input type="text" id="activeInput" value="6,11,13">
+                Rounds:
+                <input type="number" id="roundInput" min="1" max="8" step="1" value="2">
+                (For larger number of rounds, it takes more time to render)
+            </div>
+            <div id="tikz-container"></div>
+            <script type="module" src="./script.js"></script>
+        </div>
+        <div id="description">
+            <p>This is the first few rounds of the SKINNY tweakable block cipher. Designed to be lightweight.</p>
+            <br>
+
+            <h3>Cipher Description (What the letters in the figure means):</h3>
+            <p><b>SubCells (SC):</b> An S-Box is applied to each cell </p>
+            <p><b>AddConstants (AC):</b> A 6-bit affine LFSR, that generates the round constant </p>
+            <p><b>AddRoundTweakey (ART):</b> Xor each state with a tweakey (Key with a tweakable schedule)</p>
+            <p><b>ShiftRows (SR):</b> Shift the row cells, as specified in the figure above</p>
+            <p><b>MixColumns (MC):</b> An operation that xors and reorganizes the rows, as specified in the figure above</p>
+
+            <h3>Page Description:</h3>
+            <p><b>Active cells:</b> You can specify the active cells in the input box (integers 0-15, separated by comma), these numbers will effect the underlying TikZ code, which is then rendered by TikzJax, where each active cell is marked in red and subsequently changed by the cipher operations.</p>
+            <p><b>Rounds:</b> Specify the number of rounds, ranging from 1 to 8. If you're using this for personal use, you can make the max number larger, but do expect long render time from TikzJax. </p>
+            <br>
+            <p>Original paper of SKINNY: <a href="https://eprint.iacr.org/2016/660">https://eprint.iacr.org/2016/660</a></p>
+            <p>LaTeX file provided by: <a href="https://iacr.org/authors/tikz/">https://iacr.org/authors/tikz/</a></p>
+            <p>THE TikzJax fork: <a href="https://github.com/benrbray/tikzjax">benrbray/tikzjax</a></p>
+            <br>
+            <br>
+            <p><a href="/index.html">back</a></p>
+        </div>
+    </body>
+</html>

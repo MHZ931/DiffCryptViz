@@ -1,0 +1,243 @@
+\usepackage{tikz}
+
+%% Public TikZ libraries
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+
+%% Custom TikZ addons
+\usetikzlibrary{crypto.symbols}
+%% \tikzset{shadows=no}        % Option: add shadows to XOR, ADD, etc.
+
+
+\newcommand{\cellnums}{
+  \foreach \i in {0,1,2,3} {
+    \foreach \j [evaluate=\j as \result using int(\i*4+\j)] in {0,1,2,3} {
+        \draw (0.5 + \j, 0.5 + \i) node {\result};
+    }
+  }
+}
+
+\newcommand{\markred}[1][] {
+  \foreach \x/\y in {#1} {
+     \filldraw[red] (\x,\y) rectangle (\x+1, \y+1);
+  }
+}
+
+%% Document
+\begin{document}
+\begin{tikzpicture}[
+	very thick,
+	line cap=round,
+]
+
+	\tikzset{
+		contact/.style={
+			circle, 
+			fill=black, 
+			minimum size=5pt, 
+			inner sep=0pt,
+			anchor=center,
+		},
+	}
+
+
+  %% Before SubCells
+  \begin{scope}[yshift=-5cm, xshift=-6cm]
+  
+%  	\node (IS) at (-0.5,2) {\Large $IS$};
+    \markred[${activecells1}]
+	
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    
+    \draw[fill=gray!35, rounded corners] (4.5,0) rectangle node[]{{\Large\texttt{SC}}} ++(1,4) ;
+
+    \cellnums
+    
+	\draw[->] (4,3.5) -- ++(0.5,0);
+ 	\draw[->] (4,2.5) -- ++(0.5,0);
+ 	\draw[->] (4,1.5) -- ++(0.5,0);
+ 	\draw[->] (4,0.5) -- ++(0.5,0);
+    
+	\draw[->] (5.5,3.5) -- ++(0.5,0);
+ 	\draw[->] (5.5,2.5) -- ++(0.5,0);
+ 	\draw[->] (5.5,1.5) -- ++(0.5,0);
+ 	\draw[->] (5.5,0.5) -- ++(0.5,0);
+  \end{scope}  
+
+
+  \begin{scope}[yshift=-5cm, xshift=0cm]
+
+    \markred[${activecells1}]
+  
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    
+	
+    \draw[fill=gray!35, rounded corners] (4.5,0) rectangle node{{\Large\texttt{AC}}} ++(1,4) ;
+    
+	\draw[->] (4,3.5) -- ++(0.5,0);
+ 	\draw[->] (4,2.5) -- ++(0.5,0);
+ 	\draw[->] (4,1.5) -- ++(0.5,0);
+ 	\draw[->] (4,0.5) -- ++(0.5,0);
+    
+    \node[XOR] (X0) at (6.0,3.5){};
+    \node[XOR] (X1) at (6.5,2.5){};
+	\draw[->] ($(X0)+(0,0.75)$) -- (X0);
+	\draw[->] ($(X1)+(0,1.75)$) -- (X1);
+    \node[draw, rectangle, fill=gray!35, text centered, rounded corners, minimum width=4em, minimum height=1.75em] (extracted) at (6.25,4.5) {\Large\texttt{ART}};%\textbf{Extracted \\$8s$-bit subtweakey}
+
+
+	\draw[->] (5.5,3.5) -- (X0);
+ 	\draw[->] (5.5,2.5) -- (X1);
+	
+	\draw[->] (X0) -- ++(1,0);
+	\draw[->] (X1) -- ++(0.5,0);
+	
+ 	\draw[->] (5.5,1.5) -- ++(1.5,0);
+ 	\draw[->] (5.5,0.5) -- ++(1.5,0);
+  \end{scope}  
+
+
+  \begin{scope}[yshift=-5cm, xshift=+7cm]
+
+    \markred[${activecells1}]
+  
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+
+    \draw[fill=gray!35, rounded corners] (4.5,2.2) rectangle node{\Large\texttt{>>>\,1}} ++(1.5,0.7) ;
+    \draw[fill=gray!35, rounded corners] (4.5,1.2) rectangle node{\Large\texttt{>>>\,2}} ++(1.5,0.7) ;
+    \draw[fill=gray!35, rounded corners] (4.5,0.2) rectangle node{\Large\texttt{>>>\,3}} ++(1.5,0.7) ;
+    
+    \draw[->] (4,0.5) -- +(0.5,0);
+    \draw[->] (4,1.5) -- +(0.5,0);
+    \draw[->] (4,2.5) -- +(0.5,0);
+    \draw[->] (4,3.5) -- +(2.5,0);
+    \draw[->] (6,0.5) -- +(0.5,0);
+    \draw[->] (6,1.5) -- +(0.5,0);
+    \draw[->] (6,2.5) -- +(0.5,0);
+    
+    \node[draw, rectangle, fill=gray!35, text centered, rounded corners, minimum width=9em, minimum height=1.75em]  at (5.25, 4.5) {\Large\texttt{ShiftRows}};
+  \end{scope}  
+
+%  \begin{scope}[yshift=-5cm, xshift=+13.5cm]
+%  
+%    \draw (0,0) rectangle (4,4);
+%    \draw (0,1) -- +(4,0);
+%    \draw (0,2) -- +(4,0);
+%    \draw (0,3) -- +(4,0);
+%    \draw (1,0) -- +(0,4);
+%    \draw (2,0) -- +(0,4);
+%    \draw (3,0) -- +(0,4);
+%    
+%    \node[contact] (cL0) at (4.5,3.5){};
+%    \node[contact] (cL1) at (5.0,2.5){};
+%    \node[contact] (cL3) at (5.5,0.5){};
+%    \node[XOR]     (xL2) at (4.5,1.5){};
+%    \node[XOR]     (xL3) at (5.0,0.5){};
+%    \node[XOR]     (xL2b) at (5.5,1.5){};
+%    
+%    \draw (4,3.5) -- (cL0.center);
+%    \draw (4,2.5) -- (cL1.center);
+%    \draw[->] (4,1.5) -- (xL2);
+%    \draw[->] (4,0.5) -- (xL3);
+%    \draw[->] (cL0.center) -- (xL2);
+%    \draw[->] (cL1.center) -- (xL3);
+%    \draw[->] (xL2) -- (xL2b);
+%    \draw[->] (cL3.center) -- (xL2b);
+%
+%	\draw[->] (xL3) -- (cL3.center) -- ($(cL3.center)+(0.5,0)$) -- ++(0.5,2) -- ++(1.5,0);
+%	\draw[->] (xL2b) -- ($(xL2b.center)+(0.5,0)$) -- ++(0.5,2) -- ++(1.5,0);
+%	\draw[->] (cL1) -- ($(cL1.center)+(1,0)$) -- ++(0.5,-2) -- ++(0.5,0) -- ++(0.5,1)-- ++(0.5,0);
+%	\draw[->] (cL0) -- ($(cL0.center)+(1.5,0)$) -- ++(0.5,-2) -- ++(0.5,0) -- ++(0.5,-1)-- ++(0.5,0);
+%    
+%    \node[draw, rectangle, fill=gray!35, text centered, rounded corners, minimum width=7em, minimum height=1.75em]  at (6, 4.5) {\texttt{MixColumns}};
+%
+%  \end{scope}  
+  
+%  \begin{scope}[yshift=-5cm, xshift=+21.5cm]
+%  
+%    \draw (0,0) rectangle (4,4);
+%    \draw (0,1) -- +(4,0);
+%    \draw (0,2) -- +(4,0);
+%    \draw (0,3) -- +(4,0);
+%    \draw (1,0) -- +(0,4);
+%    \draw (2,0) -- +(0,4);
+%    \draw (3,0) -- +(0,4);
+%    
+%  \end{scope}  
+
+
+  \begin{scope}[yshift=-5cm, xshift=+13.5cm]
+
+    \markred[${activecells2}]
+  
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    
+    \node[contact] (cL0) at (5.25,3.5){};
+    \node[contact] (cL2) at (4.5,1.5){};
+    \node[contact] (cL2b) at (5.75,1.5){};
+    
+    \node[XOR]     (xL1) at (4.5,2.5){};
+    \node[XOR]     (xL2) at (5.25,1.5){};
+    \node[XOR]     (xL3) at (5.75,0.5){};
+    
+    \draw[->] (4,2.5) -- (xL1);
+    \draw (4,1.5) -- (cL2.center);
+    \draw[->] (cL2.center) -- (xL2);
+    \draw[->] (cL2.center) -- (xL1);
+    
+    \draw (4,3.5) -- (cL0.center);
+    \draw[->] (cL0.center) -- (xL2);
+    \draw (xL2) -- (cL2b.center);
+    \draw[->] (cL2b.center) -- (xL3);
+    \draw[->] (4,0.5) -- (xL3);
+    
+	\draw[->] (cL0.center) -- ($(cL0.center)+(0.75,0)$) -- ++(0.5,-1) -- ++(0.5,0);
+	\draw[->] (xL1.center) -- ($(xL1.center)+(1.5,0)$) -- ++(0.5,-1) -- ++(0.5,0);
+	\draw[->] (cL2b.center) -- ($(cL2b.center)+(0.25,0)$) -- ++(0.5,-1) -- ++(0.5,0);
+	\draw[->] (xL3.center) -- ($(xL3.center)+(0.5,0)$) -- ++(0.25,+3) -- ++(0.5,0);
+
+    \node[draw, rectangle, fill=gray!35, text centered, rounded corners, minimum width=9em, minimum height=1.75em]  at (5.5, 4.5) {\Large\texttt{MixColumns}};
+
+  \end{scope}  
+
+  \begin{scope}[yshift=-5cm, xshift=+20.5cm]
+
+    \markred[${activecells3}]
+  
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    
+  \end{scope}  
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,42 @@
+/* dist/style.css */
+body {
+    display: grid;
+    gap: 20px;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: system-ui, sans-serif;
+}
+
+#content {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: stretch
+}
+
+#input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 700px;
+    gap: 10px;
+    transform: translateY(-50px);
+}
+
+#activeInput {
+    width: 225px;
+}
+
+#roundInput {
+    width: 50px;
+}
+
+#tikz-container {
+    display: grid;
+    width: 75%;
+    height: 700px;
+    outline: thin solid;
+    overflow-y: auto;
+    justify-content: center;
+}

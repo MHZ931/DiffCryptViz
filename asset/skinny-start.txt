@@ -1,0 +1,42 @@
+\usepackage{tikz}
+
+%% Public TikZ libraries
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+
+%% Custom TikZ addons
+\usetikzlibrary{crypto.symbols}
+%% \tikzset{shadows=no}        % Option: add shadows to XOR, ADD, etc.
+
+
+\newcommand{\cellnums}{
+  \foreach \i in {0,1,2,3} {
+    \foreach \j [evaluate=\j as \result using int(\i*4+\j)] in {0,1,2,3} {
+        \draw (0.5 + \j, 0.5 + \i) node {\result};
+    }
+  }
+}
+
+\newcommand{\markred}[1][] {
+  \foreach \x/\y in {#1} {
+     \filldraw[red] (\x,\y) rectangle (\x+1, \y+1);
+  }
+}
+
+%% Document
+\begin{document}
+\begin{tikzpicture}[
+	very thick,
+	line cap=round,
+]
+
+	\tikzset{
+		contact/.style={
+			circle, 
+			fill=black, 
+			minimum size=5pt, 
+			inner sep=0pt,
+			anchor=center,
+		},
+	}
